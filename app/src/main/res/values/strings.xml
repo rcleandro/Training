@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Training</string>
+    <string name="title_training">Treinos</string>
+    <string name="title_exercises">Exercícios</string>
+    <string name="title_menu">Menu</string>
+    <string name="add_training">Adicionar treino</string>
+    <string name="add_exercise">Adicionar exercício</string>
+    <string name="image">Imagem</string>
+    <string name="name">Nome</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="password_mask">**********</string>
+    <string name="save">Salvar</string>
+    <string name="exit">Sair</string>
+    <string name="delete_account">Excluir conta</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="change_password">Alterar senha</string>
+    <string name="new_password">Nova senha</string>
+    <string name="confirm_password">Confirmar senha</string>
+    <string name="password_requirements">A senha deve ter pelo menos 8 caracteres</string>
+    <string name="passwords_do_not_match">As senhas não coincidem</string>
+    <string name="previous">Voltar</string>
+    <string name="comments">Observações</string>
+    <string name="add_foto">Adicionar foto</string>
+    <string name="image_url">Url da imagem</string>
+    <string name="must_be_filled">"Campo deve ser preenchido"</string>
+    <string name="invalid_email">Invalid email</string>
+</resources>

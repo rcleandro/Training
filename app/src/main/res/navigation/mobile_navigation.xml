@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_training">
+
+    <fragment
+        android:id="@+id/navigation_training"
+        android:name="br.com.leandro.training.ui.training.TrainingFragment"
+        android:label="@string/title_training"
+        tools:layout="@layout/fragment_training">
+
+        <action
+            android:id="@+id/showAddTrainingFragment"
+            app:destination="@id/navigation_add_training"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_training"
+        android:name="br.com.leandro.training.ui.training.AddTrainingFragment"
+        android:label="@string/add_training"
+        tools:layout="@layout/fragment_add_training"/>
+
+    <fragment
+        android:id="@+id/navigation_exercises"
+        android:name="br.com.leandro.training.ui.exercises.ExercisesFragment"
+        android:label="@string/title_exercises"
+        tools:layout="@layout/fragment_exercises" >
+
+        <action
+            android:id="@+id/showAddExerciseFragment"
+            app:destination="@id/navigation_add_exercise"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_exercise"
+        android:name="br.com.leandro.training.ui.exercises.AddExerciseFragment"
+        android:label="@string/add_exercise"
+        tools:layout="@layout/fragment_add_exercise"/>
+
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="br.com.leandro.training.ui.menu.MenuFragment"
+        android:label="@string/title_menu"
+        tools:layout="@layout/fragment_menu" >
+
+        <action
+            android:id="@+id/showEditProfileFragment"
+            app:destination="@id/navigation_edit_profile"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/showChangePasswordFragment"
+            app:destination="@id/navigation_change_password"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_edit_profile"
+        android:name="br.com.leandro.training.ui.menu.EditProfileFragment"
+        android:label="@string/edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+
+    <fragment
+        android:id="@+id/navigation_change_password"
+        android:name="br.com.leandro.training.ui.menu.ChangePasswordFragment"
+        android:label="@string/change_password"
+        tools:layout="@layout/fragment_change_password" />
+
+</navigation>
