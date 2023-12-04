@@ -10,5 +10,7 @@ interface TrainingRepository {
 
     suspend fun add(training: Training)
 
+    suspend fun update(training: Training)
+
     suspend fun delete(name: Long)
 }

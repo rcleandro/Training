@@ -10,18 +10,18 @@
         android:id="@+id/previous"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/ic_arrow_back"
         android:layout_margin="16dp"
+        android:contentDescription="@string/previous"
+        android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/previous" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvAddTraining"
+        android:id="@+id/tvEditExercise"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/add_training"
+        android:text="@string/edit_exercise"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
         android:hint="@string/comments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddTraining">
+        app:layout_constraintTop_toBottomOf="@+id/tvEditExercise">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextComments"
@@ -51,32 +51,42 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chooseExercisesRecyclerView"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldImage"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/image_url"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnSave"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldComments"
-        tools:listitem="@layout/choose_exercise_item" />
+        app:layout_constraintTop_toBottomOf="@+id/textFieldComments">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="normal"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:enabled="false"
         android:text="@string/save"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textFieldImage"
         tools:enabled="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

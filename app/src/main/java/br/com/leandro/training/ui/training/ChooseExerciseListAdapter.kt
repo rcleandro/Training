@@ -1,4 +1,4 @@
-package br.com.leandro.training.ui.exercises
+package br.com.leandro.training.ui.training
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,24 +7,25 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.leandro.training.R
 import br.com.leandro.training.core.database.entity.Exercise
-import br.com.leandro.training.databinding.ExerciseItemBinding
+import br.com.leandro.training.databinding.ChooseExerciseItemBinding
 import com.squareup.picasso.Picasso
 
 /**
  * RecyclerView adapter for displaying a list of exercises.
  *
- * The UI is based on the [ExerciseItemBinding].
+ * The UI is based on the [ChooseExerciseItemBinding].
  * We use the [Exercise] as a model for the binding.
  */
-class ExerciseListAdapter : RecyclerView.Adapter<ExerciseListAdapter.ViewHolder>() {
+class ChooseExerciseListAdapter(
+    private val selectedExercises: List<Exercise>? = listOf()
+) : RecyclerView.Adapter<ChooseExerciseListAdapter.ViewHolder>() {
 
     private val asyncListDiffer: AsyncListDiffer<Exercise> = AsyncListDiffer(this, DiffCallback)
-    lateinit var onItemClickListener: (item: Exercise) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ExerciseItemBinding.inflate(layoutInflater, parent, false)
-        return ViewHolder(binding, onItemClickListener)
+        val binding = ChooseExerciseItemBinding.inflate(layoutInflater, parent, false)
+        return ViewHolder(binding, selectedExercises)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,9 +34,10 @@ class ExerciseListAdapter : RecyclerView.Adapter<ExerciseListAdapter.ViewHolder>
 
     override fun getItemCount(): Int = asyncListDiffer.currentList.size
 
-    fun getExercise(position: Int): Exercise {
-        notifyItemChanged(position)
-        return asyncListDiffer.currentList[position]
+    override fun getItemViewType(position: Int): Int = position
+
+    fun getSelectedExercises(): List<Exercise> {
+        return asyncListDiffer.currentList.filter { it.selected == true }
     }
 
     fun updateExercises(exercises: List<Exercise>) {
@@ -43,8 +45,8 @@ class ExerciseListAdapter : RecyclerView.Adapter<ExerciseListAdapter.ViewHolder>
     }
 
     class ViewHolder(
-        private val binding: ExerciseItemBinding,
-        private val onItemClickListener: (item: Exercise) -> Unit
+        private val binding: ChooseExerciseItemBinding,
+        private val selectedExercises: List<Exercise>?
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(exercise: Exercise) {
@@ -52,13 +54,23 @@ class ExerciseListAdapter : RecyclerView.Adapter<ExerciseListAdapter.ViewHolder>
             binding.exerciseItemName.text = name
             binding.exerciseItemComments.text = exercise.comments
 
+            val selected = selectedExercises?.find { it.name == exercise.name }
+            selected?.let { exercise.selected = true }
+
+            binding.checkbox.isChecked = exercise.selected == true
+
             Picasso.get()
                 .load(exercise.image)
                 .placeholder(R.drawable.ic_exercise_example)
                 .into(binding.imageView)
 
             binding.root.setOnClickListener {
-                onItemClickListener.invoke(exercise)
+                binding.checkbox.isChecked = !binding.checkbox.isChecked
+                exercise.selected = binding.checkbox.isChecked
+            }
+
+            binding.checkbox.setOnClickListener {
+                exercise.selected = binding.checkbox.isChecked
             }
         }
     }
@@ -70,7 +82,7 @@ class ExerciseListAdapter : RecyclerView.Adapter<ExerciseListAdapter.ViewHolder>
         }
 
         override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-            return oldItem.comments == newItem.comments && oldItem.image == newItem.image
+            return oldItem.selected == newItem.selected
         }
     }
 }

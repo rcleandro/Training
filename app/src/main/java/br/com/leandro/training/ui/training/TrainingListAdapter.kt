@@ -15,16 +15,15 @@ import br.com.leandro.training.utils.timestampToString
  * The UI is based on the [TrainingItemBinding].
  * We use the [Training] as a model for the binding.
  */
-class TrainingListAdapter(
-    private val viewModel: TrainingListViewModel
-) : RecyclerView.Adapter<TrainingListAdapter.ViewHolder>() {
+class TrainingListAdapter : RecyclerView.Adapter<TrainingListAdapter.ViewHolder>() {
 
     private val asyncListDiffer: AsyncListDiffer<Training> = AsyncListDiffer(this, DiffCallback)
+    lateinit var onItemClickListener: (item: Training) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = TrainingItemBinding.inflate(layoutInflater, parent, false)
-        return ViewHolder(binding, viewModel)
+        return ViewHolder(binding, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -44,7 +43,7 @@ class TrainingListAdapter(
 
     class ViewHolder(
         private val binding: TrainingItemBinding,
-        private val viewModel: TrainingListViewModel
+        private val onItemClickListener: (item: Training) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(training: Training) {
@@ -53,9 +52,9 @@ class TrainingListAdapter(
             binding.trainingDescription.text = training.description
             binding.trainingDate.text = training.date.timestampToString()
 
-//            binding.completeCheckBox.setOnClickListener {
-//                viewModel.toggleTrainingCompleted(training.id)
-//            }
+            binding.root.setOnClickListener {
+                onItemClickListener.invoke(training)
+            }
         }
     }
 
@@ -66,7 +65,7 @@ class TrainingListAdapter(
         }
 
         override fun areContentsTheSame(oldItem: Training, newItem: Training): Boolean {
-            return oldItem.description == newItem.description
+            return oldItem.description == newItem.description && oldItem.exercises == newItem.exercises
         }
     }
 }

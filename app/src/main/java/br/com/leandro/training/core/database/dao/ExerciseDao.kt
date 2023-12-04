@@ -3,6 +3,7 @@ package br.com.leandro.training.core.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import br.com.leandro.training.core.database.entity.Exercise
 
 @Dao
@@ -21,6 +22,9 @@ interface ExerciseDao {
 
     @Insert
     suspend fun add(exercise: Exercise)
+
+    @Update
+    suspend fun update(exercise: Exercise)
 
     @Query(
         """

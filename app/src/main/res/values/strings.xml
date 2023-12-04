@@ -25,4 +25,6 @@
     <string name="image_url">Url da imagem</string>
     <string name="must_be_filled">"Campo deve ser preenchido"</string>
     <string name="invalid_email">Invalid email</string>
+    <string name="edit_training">Editar treino</string>
+    <string name="edit_exercise">Editar exercício</string>
 </resources>

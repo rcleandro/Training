@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class AddExerciseViewModel @Inject constructor(
+class EditExercisesViewModel @Inject constructor(
     private val exercisesRepository: ExercisesRepository
 ) : ViewModel() {
 
@@ -21,16 +21,17 @@ class AddExerciseViewModel @Inject constructor(
     fun onSaved(): LiveData<Boolean> = onSaved
 
     /**
-     * Add new exercise.
+     * Edit exercise.
      *
-     * @param comment: The comments you want to assign to this exercise
-     * @param image: The image you want to assign to this exercise
+     * @param comment: The comments you want to update to this exercise
+     * @param image: The image you want to update to this exercise
      */
-    fun addExercise(comment: String, image: String?) {
+    fun editExercise(name: Long, comment: String, image: String?) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                exercisesRepository.add(
+                exercisesRepository.update(
                     Exercise(
+                        name = name,
                         comments = comment,
                         image = image
                     )

@@ -16,9 +16,9 @@ import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class AddTrainingViewModel @Inject constructor(
+class EditTrainingViewModel @Inject constructor(
     private val getExerciseUseCase: GetExerciseUseCase,
-    private val trainingRepository: TrainingRepository
+    private val trainingRepository : TrainingRepository
 ) : ViewModel() {
 
     /**
@@ -55,19 +55,19 @@ class AddTrainingViewModel @Inject constructor(
     fun onSaved(): LiveData<Boolean> = onSaved
 
     /**
-     * Add new training.
+     * Edit training.
      *
-     * @param description: The description you want to give to this exercise
-     * @param exercises: The exercises you want to give to this exercise
+     * @param description: The comments you want to update to this training
      */
-    fun addTraining(description: String, exercises: List<Exercise>) {
+    fun editTraining(name: Long, description: String, exercise: List<Exercise>) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                trainingRepository.add(
+                trainingRepository.update(
                     Training(
+                        name = name,
                         description = description,
                         date = Date().time,
-                        exercises = exercises
+                        exercises = exercise
                     )
                 )
             }

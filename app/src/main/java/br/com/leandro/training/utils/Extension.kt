@@ -11,12 +11,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-fun CharSequence?.isValidEmail() : Boolean {
-    val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\$")
-
-    return this?.let { emailRegex.matches(it) } ?: false
-}
-
 fun Long.timestampToString(): String {
     val dateFormat = SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'às' HH:mm:ss", Locale.getDefault())
     return dateFormat.format(Date(this))
@@ -33,6 +27,25 @@ fun Context.vibrate(milliseconds: Long) {
     } else {
         vibrator.vibrate(milliseconds)
     }
+}
+
+fun TextInputEditText.validateEmail(): Boolean {
+    val email = this.text.toString()
+    val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\$")
+
+    return if (!emailRegex.matches(email)) {
+        this.error = getString(context, R.string.invalid_email)
+        false
+    } else true
+}
+
+fun TextInputEditText.validateForm(): Boolean {
+    val name = this.text.toString()
+
+    return if (name.isEmpty()) {
+        this.error = getString(context, R.string.must_be_filled)
+        false
+    } else true
 }
 
 fun TextInputEditText.validatePassword(

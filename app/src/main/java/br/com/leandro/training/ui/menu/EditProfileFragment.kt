@@ -9,10 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.leandro.training.R
 import br.com.leandro.training.databinding.FragmentEditProfileBinding
-import br.com.leandro.training.utils.isValidEmail
+import br.com.leandro.training.utils.validateEmail
+import br.com.leandro.training.utils.validateForm
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -47,32 +46,32 @@ class EditProfileFragment : Fragment() {
 
         binding.editTextName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                binding.btnSave.isEnabled = validateForm()
+                binding.btnSave.isEnabled = validateForms()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.btnSave.isEnabled = validateForm()
+                binding.btnSave.isEnabled = validateForms()
             }
         })
 
         binding.editTextEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                binding.btnSave.isEnabled = validateForm()
+                binding.btnSave.isEnabled = validateForms()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.btnSave.isEnabled = validateForm()
+                binding.btnSave.isEnabled = validateForms()
             }
         })
 
         binding.previous.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
         binding.btnSave.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
         // Observer UI State for changes.
@@ -89,23 +88,11 @@ class EditProfileFragment : Fragment() {
         _binding = null
     }
 
-    private fun validateForm(): Boolean {
-        val name = binding.editTextName.text.toString()
-        val email = binding.editTextEmail.text.toString()
-
+    private fun validateForms(): Boolean {
         return when {
-            name.isEmpty() -> {
-                binding.editTextName.error = getString(R.string.must_be_filled)
-                false
-            }
-            email.isEmpty() -> {
-                binding.editTextEmail.error = getString(R.string.must_be_filled)
-                false
-            }
-            !binding.editTextEmail.text.isValidEmail() -> {
-                binding.editTextEmail.error = getString(R.string.invalid_email)
-                false
-            }
+            !binding.editTextName.validateForm() -> false
+            !binding.editTextEmail.validateForm() -> false
+            !binding.editTextEmail.validateEmail() -> false
             else -> true
         }
     }

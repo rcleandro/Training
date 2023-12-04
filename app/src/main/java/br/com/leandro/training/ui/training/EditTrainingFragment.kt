@@ -1,50 +1,55 @@
 package br.com.leandro.training.ui.training
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.leandro.training.databinding.FragmentAddTrainingBinding
+import br.com.leandro.training.R
+import br.com.leandro.training.databinding.FragmentEditTrainingBinding
 import br.com.leandro.training.utils.validateForm
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
- * A [Fragment] that allows you to add new training.
+ * A [Fragment] that allows you to edit training.
  */
 @AndroidEntryPoint
-class AddTrainingFragment : Fragment() {
+class EditTrainingFragment : Fragment() {
 
-    private var _binding: FragmentAddTrainingBinding? = null
+    private var _binding: FragmentEditTrainingBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: AddTrainingViewModel
+    private lateinit var viewModel: EditTrainingViewModel
     private lateinit var adapter: ChooseExerciseListAdapter
+    private val args by navArgs<EditTrainingFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[AddTrainingViewModel::class.java]
+        viewModel = ViewModelProvider(this)[EditTrainingViewModel::class.java]
 
-        lifecycle.addObserver(ChooseExerciseLifecycleObserver(viewModel))
-        adapter = ChooseExerciseListAdapter()
+        lifecycle.addObserver(ChooseExerciseToEditLifecycleObserver(viewModel))
+        adapter = ChooseExerciseListAdapter(args.training.exercises)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddTrainingBinding.inflate(inflater, container, false)
+        _binding = FragmentEditTrainingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setArgs()
 
         // Set the adapter
         binding.chooseExercisesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -57,13 +62,10 @@ class AddTrainingFragment : Fragment() {
         binding.btnSave.setOnClickListener { onSave() }
 
         binding.editTextComments.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                binding.btnSave.isEnabled = binding.editTextComments.validateForm()
-            }
+            override fun afterTextChanged(p0: Editable?) { validateForm() }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.btnSave.isEnabled = binding.editTextComments.validateForm()
+                validateForm()
             }
         })
 
@@ -78,7 +80,18 @@ class AddTrainingFragment : Fragment() {
             .onSaved()
             .observe(viewLifecycleOwner) {
                 if (it) findNavController().navigateUp()
-        }
+            }
+    }
+
+    private fun setArgs() {
+        val title = "${getString(R.string.edit_training)} ${args.training.name}"
+        binding.tvEditTraining.text = title
+        binding.editTextComments.setText(args.training.description)
+        validateForm()
+    }
+
+    private fun validateForm() {
+        binding.btnSave.isEnabled = binding.editTextComments.validateForm()
     }
 
     /**
@@ -86,14 +99,15 @@ class AddTrainingFragment : Fragment() {
      *
      * Update list of exercises according to updates.
      */
-    private fun bindUiState(uiState: AddTrainingViewModel.UiState) {
+    private fun bindUiState(uiState: EditTrainingViewModel.UiState) {
         adapter.updateExercises(uiState.exerciseList)
     }
 
     private fun onSave() {
+        val name = args.training.name
         val description = binding.editTextComments.text.toString()
         val exercises = adapter.getSelectedExercises()
 
-        viewModel.addTraining(description = description, exercises = exercises)
+        viewModel.editTraining(name = name, description = description, exercise = exercises)
     }
 }

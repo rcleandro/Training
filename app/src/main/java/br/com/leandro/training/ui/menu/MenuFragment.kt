@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.leandro.training.R
 import br.com.leandro.training.databinding.FragmentMenuBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,11 +31,13 @@ class MenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.editProfile.setOnClickListener {
-            findNavController().navigate(R.id.navigation_edit_profile)
+            val action = MenuFragmentDirections.showEditProfileFragment()
+            findNavController().navigate(action)
         }
 
         binding.changePassword.setOnClickListener {
-            findNavController().navigate(R.id.navigation_change_password)
+            val action = MenuFragmentDirections.showChangePasswordFragment()
+            findNavController().navigate(action)
         }
 
         binding.deleteAccount.setOnClickListener { }
