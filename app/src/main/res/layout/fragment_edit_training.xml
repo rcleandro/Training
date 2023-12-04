@@ -17,11 +17,11 @@
         android:contentDescription="@string/previous" />
 
     <TextView
-        android:id="@+id/tvAddTraining"
+        android:id="@+id/tvEditTraining"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/add_training"
+        android:text="@string/edit_training"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
         android:hint="@string/comments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddTraining">
+        app:layout_constraintTop_toBottomOf="@+id/tvEditTraining">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextComments"

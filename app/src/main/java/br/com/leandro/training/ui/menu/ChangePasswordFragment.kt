@@ -54,11 +54,11 @@ class ChangePasswordFragment : Fragment() {
         })
 
         binding.previous.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
         binding.btnSave.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
     }
 

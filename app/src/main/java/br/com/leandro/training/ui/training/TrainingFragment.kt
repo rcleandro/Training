@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.leandro.training.R
 import br.com.leandro.training.databinding.FragmentTrainingBinding
 import br.com.leandro.training.utils.ItemSwipeHandle
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,8 +33,7 @@ class TrainingFragment : Fragment() {
         viewModel = ViewModelProvider(this)[TrainingListViewModel::class.java]
 
         lifecycle.addObserver(TrainingLifecycleObserver(viewModel))
-
-        adapter = TrainingListAdapter(viewModel)
+        adapter = TrainingListAdapter()
     }
 
     override fun onCreateView(
@@ -54,9 +52,14 @@ class TrainingFragment : Fragment() {
         // Set the adapter
         binding.trainingRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.trainingRecyclerView.adapter = adapter
+        adapter.onItemClickListener = { training ->
+            val action = TrainingFragmentDirections.showEditTrainingFragment(training)
+            findNavController().navigate(action)
+        }
 
         binding.fabAddTraining.setOnClickListener {
-            findNavController().navigate(R.id.navigation_add_training)
+            val action = TrainingFragmentDirections.showAddTrainingFragment()
+            findNavController().navigate(action)
         }
 
         // Observer UI State for changes.

@@ -36,6 +36,11 @@ class ExerciseRepositoryImpl @Inject constructor(
         dao.add(exercise)
     }
 
+    override suspend fun update(exercise: Exercise) {
+        Log.d(TAG, "Editing exercise ${exercise.name}")
+        dao.update(exercise)
+    }
+
     override suspend fun delete(name: Long) {
         Log.d(TAG, "Deleting exercise with name $name")
         dao.delete(name)

@@ -10,5 +10,7 @@ interface ExercisesRepository {
 
     suspend fun add(exercise: Exercise)
 
+    suspend fun update(exercise: Exercise)
+
     suspend fun delete(name: Long)
 }

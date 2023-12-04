@@ -19,6 +19,14 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
+        <action
+            android:id="@+id/showEditTrainingFragment"
+            app:destination="@id/navigation_edit_training"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
     </fragment>
 
     <fragment
@@ -26,6 +34,16 @@
         android:name="br.com.leandro.training.ui.training.AddTrainingFragment"
         android:label="@string/add_training"
         tools:layout="@layout/fragment_add_training"/>
+
+    <fragment
+        android:id="@+id/navigation_edit_training"
+        android:name="br.com.leandro.training.ui.training.EditTrainingFragment"
+        android:label="@string/edit_training"
+        tools:layout="@layout/fragment_edit_training">
+        <argument
+            android:name="training"
+            app:argType="br.com.leandro.training.core.database.entity.Training" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_exercises"
@@ -41,6 +59,14 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
+        <action
+            android:id="@+id/showEditExerciseFragment"
+            app:destination="@id/navigation_edit_exercise"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
     </fragment>
 
     <fragment
@@ -48,6 +74,16 @@
         android:name="br.com.leandro.training.ui.exercises.AddExerciseFragment"
         android:label="@string/add_exercise"
         tools:layout="@layout/fragment_add_exercise"/>
+
+    <fragment
+        android:id="@+id/navigation_edit_exercise"
+        android:name="br.com.leandro.training.ui.exercises.EditExercisesFragment"
+        android:label="@string/edit_exercise"
+        tools:layout="@layout/fragment_edit_training">
+        <argument
+            android:name="exercise"
+            app:argType="br.com.leandro.training.core.database.entity.Exercise" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_menu"

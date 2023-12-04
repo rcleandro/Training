@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -55,15 +56,21 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.49")
     ksp("com.google.dagger:hilt-android-compiler:2.49")
 
+    // Room
     implementation("androidx.room:room-ktx:2.6.0")
     ksp("androidx.room:room-compiler:2.6.0")
 
+    // Gson
     implementation("com.google.code.gson:gson:2.10.1")
 
-//    implementation("com.squareup:javapoet:1.13.0")
+    // Picasso
     implementation("com.squareup.picasso:picasso:2.71828")
+
+    // Firebase Auth
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
 
 }
