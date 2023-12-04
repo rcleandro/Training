@@ -1,5 +1,6 @@
 package br.com.leandro.training.ui.menu
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -9,23 +10,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import br.com.leandro.training.databinding.FragmentChangePasswordBinding
+import br.com.leandro.training.databinding.FragmentDeleteAccountBinding
 import br.com.leandro.training.ui.auth.AuthActivity
 import br.com.leandro.training.utils.showToast
 import br.com.leandro.training.utils.validateEmail
 import br.com.leandro.training.utils.validateForm
 import br.com.leandro.training.utils.validatePassword
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 /**
- * A [Fragment] that allows you to change the profile password.
+ * A [Fragment] that allows the user to delete their account.
  */
-class ChangePasswordFragment : Fragment() {
+class DeleteAccountFragment : Fragment() {
 
-    private var _binding: FragmentChangePasswordBinding? = null
+    private var _binding: FragmentDeleteAccountBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -33,7 +35,7 @@ class ChangePasswordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
+        _binding = FragmentDeleteAccountBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,38 +44,21 @@ class ChangePasswordFragment : Fragment() {
 
         binding.editTextEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                binding.btnSave.isEnabled = validateForms()
+                binding.btnDelete.isEnabled = validateForms()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.btnSave.isEnabled = validateForms()
+                binding.btnDelete.isEnabled = validateForms()
             }
         })
 
         binding.editTextPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                binding.btnSave.isEnabled = validateForms()
+                binding.btnDelete.isEnabled = validateForms()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.btnSave.isEnabled = validateForms()
-            }
-        })
-
-        binding.editTextNewPassword.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.btnSave.isEnabled = validateForms()
-            }
-        })
-
-        binding.editTextConfirmPassword.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.btnSave.isEnabled = validateForms()
+                binding.btnDelete.isEnabled = validateForms()
             }
         })
 
@@ -81,7 +66,7 @@ class ChangePasswordFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding.btnSave.setOnClickListener { changePassword() }
+        binding.btnDelete.setOnClickListener { showConfirmationDialog() }
     }
 
     private fun validateForms(): Boolean {
@@ -89,36 +74,46 @@ class ChangePasswordFragment : Fragment() {
             !binding.editTextEmail.validateForm() -> false
             !binding.editTextEmail.validateEmail() -> false
             !binding.editTextPassword.validatePassword() -> false
-            !binding.editTextNewPassword.validatePassword(binding.editTextConfirmPassword) -> false
-            !binding.editTextConfirmPassword.validatePassword(binding.editTextNewPassword) -> false
             else -> true
         }
     }
 
-    private fun changePassword() {
-        val email = binding.editTextEmail.text.toString()
-        val password = binding.editTextPassword.text.toString()
-        val newPassword = binding.editTextNewPassword.text.toString()
+    private fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
 
+        builder.setTitle("Confirmação")
+            .setMessage("Tem certeza de que deseja excluir sua conta?")
+            .setPositiveButton("Sim") { _, _ -> deleteAccount() }
+            .setNegativeButton("Não") { _, _ ->  }
+            .setCancelable(false)
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun deleteAccount() {
         val auth = FirebaseAuth.getInstance()
         val user: FirebaseUser? = auth.currentUser
 
         if (user != null) {
-            val credential: AuthCredential = EmailAuthProvider.getCredential(email, password)
+            val credential = EmailAuthProvider.getCredential("sj.leandro@gmail.com", "12345678")
 
             user.reauthenticate(credential)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        user.updatePassword(newPassword)
-                            .addOnCompleteListener { updatePasswordTask ->
-                                if (updatePasswordTask.isSuccessful) {
-                                    requireContext().showToast("Senha alterada")
-                                    findNavController().navigateUp()
-                                } else requireContext().showToast("Falha ao atualizar a senha")
+                        user.delete()
+                            .addOnCompleteListener { deleteTask ->
+                                if (deleteTask.isSuccessful) {
+                                    presentAuthScreen()
+                                    requireContext().showToast("Conta excluída")
+                                } else requireContext().showToast("Falha ao excluir conta")
                             }
                     } else requireContext().showToast("Verifique seu e-mail e senha atual")
                 }
-        } else presentAuthScreen()
+        } else {
+            Firebase.auth.signOut()
+            presentAuthScreen()
+        }
     }
 
     private fun presentAuthScreen() {

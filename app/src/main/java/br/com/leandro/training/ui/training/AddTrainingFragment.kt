@@ -61,7 +61,6 @@ class AddTrainingFragment : Fragment() {
                 binding.btnSave.isEnabled = binding.editTextComments.validateForm()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 binding.btnSave.isEnabled = binding.editTextComments.validateForm()
             }
