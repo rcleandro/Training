@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "195814523591",
+    "project_id": "training-fcaab",
+    "storage_bucket": "training-fcaab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195814523591:android:c5264bc170ec6100c0f4e2",
+        "android_client_info": {
+          "package_name": "br.com.leandro.training"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT15F7WWrQMIVxStx0Y6Sk7R7nMXZ-PA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
