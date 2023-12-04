@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Training</string>
+    <string name="title_activity_auth">AuthActivity</string>
+    <string name="title_auth">Autenticação</string>
+    <string name="title_sign_up">Cadastro</string>
+    <string name="title_check_email">Confirmar e-mail</string>
     <string name="title_training">Treinos</string>
     <string name="title_exercises">Exercícios</string>
     <string name="title_menu">Menu</string>
@@ -9,11 +13,11 @@
     <string name="name">Nome</string>
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
+    <string name="current_password">Senha atual</string>
     <string name="password_mask">**********</string>
     <string name="save">Salvar</string>
     <string name="exit">Sair</string>
     <string name="delete_account">Excluir conta</string>
-    <string name="edit_profile">Editar perfil</string>
     <string name="change_password">Alterar senha</string>
     <string name="new_password">Nova senha</string>
     <string name="confirm_password">Confirmar senha</string>
@@ -27,4 +31,13 @@
     <string name="invalid_email">Invalid email</string>
     <string name="edit_training">Editar treino</string>
     <string name="edit_exercise">Editar exercício</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Cadastre-se</string>
+    <string name="check_email">Verifique seu e-mail para completar o cadastro. Foi enviado um e-mail para o endereço cadastro com um link de confirmação.</string>
+    <string name="email_checked">E-mail confirmado</string>
+    <string name="email_not_received">Não recebi o e-mail</string>
+    <string name="loading">Carregando</string>
+    <string name="email_has_not_yet_been_verified">Parece que seu e-mail ainda não foi verificado.</string>
+    <string name="resent_verification_email">E-mail de verificação reenviado</string>
+    <string name="delete">Excluir</string>
 </resources>

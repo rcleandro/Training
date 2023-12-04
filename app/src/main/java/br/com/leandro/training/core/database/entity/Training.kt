@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import br.com.leandro.training.core.database.ExercisesConverter
-import br.com.leandro.training.utils.timestampToString
 import java.io.Serializable
 
 @Entity(tableName = "training")

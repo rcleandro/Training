@@ -92,16 +92,16 @@
         tools:layout="@layout/fragment_menu" >
 
         <action
-            android:id="@+id/showEditProfileFragment"
-            app:destination="@id/navigation_edit_profile"
+            android:id="@+id/showChangePasswordFragment"
+            app:destination="@id/navigation_change_password"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
         <action
-            android:id="@+id/showChangePasswordFragment"
-            app:destination="@id/navigation_change_password"
+            android:id="@+id/showDeleteAccountFragment"
+            app:destination="@id/navigation_delete_account"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -110,15 +110,15 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_edit_profile"
-        android:name="br.com.leandro.training.ui.menu.EditProfileFragment"
-        android:label="@string/edit_profile"
-        tools:layout="@layout/fragment_edit_profile" />
-
-    <fragment
         android:id="@+id/navigation_change_password"
         android:name="br.com.leandro.training.ui.menu.ChangePasswordFragment"
         android:label="@string/change_password"
         tools:layout="@layout/fragment_change_password" />
+
+    <fragment
+        android:id="@+id/navigation_delete_account"
+        android:name="br.com.leandro.training.ui.menu.DeleteAccountFragment"
+        android:label="@string/delete_account"
+        tools:layout="@layout/fragment_delete_account" />
 
 </navigation>

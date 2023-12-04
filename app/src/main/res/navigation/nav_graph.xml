@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/AuthFragment">
+
+    <fragment
+        android:id="@+id/AuthFragment"
+        android:name="br.com.leandro.training.ui.auth.AuthFragment"
+        android:label="@string/title_auth"
+        tools:layout="@layout/fragment_auth">
+
+        <action
+            android:id="@+id/showSignUpFragment"
+            app:destination="@id/SignUpFragment" />
+
+        <action
+            android:id="@+id/showCheckEmail"
+            app:destination="@id/CheckEmailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/SignUpFragment"
+        android:name="br.com.leandro.training.ui.auth.SignUpFragment"
+        android:label="@string/title_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
+
+    <fragment
+        android:id="@+id/CheckEmailFragment"
+        android:name="br.com.leandro.training.ui.auth.CheckEmailFragment"
+        android:label="@string/title_check_email"
+        tools:layout="@layout/fragment_check_email" />
+
+</navigation>
